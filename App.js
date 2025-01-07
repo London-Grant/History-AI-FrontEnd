@@ -93,6 +93,7 @@ async function sendData() {
         if (!response.ok) throw new Error("Failed to get response from the server");
 
         const data = await response.json();
+        console.log(data.result);
         document.getElementById("result").innerText = data.result;
     } catch (error) {
         console.error(error);

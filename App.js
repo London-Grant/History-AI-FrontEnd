@@ -99,4 +99,5 @@ async function sendData() {
         document.getElementById("result").innerText = "Error: Unable to fetch prediction.";
     }
 }
+window.sendData = sendData;
 

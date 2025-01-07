@@ -81,7 +81,7 @@
 
 async function sendData() {
     const inputData = document.getElementById("inputData").value;
-    const apiUrl = "http://localhost:8000/predict/"; // Update this URL to match your backend
+    const apiUrl = "http://127.0.0.1:8000//predict/GOV"; // Update this URL to match your backend
 
     try {
         const response = await fetch(apiUrl, {

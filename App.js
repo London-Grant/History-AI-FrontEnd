@@ -94,10 +94,10 @@ async function sendData() {
 
         const data = await response.json();
         console.log(data.result);
-        document.getElementById("result").innerText = data.result;
+        document.getElementById("Model Response").innerText = data.result;
     } catch (error) {
         console.error(error);
-        document.getElementById("result").innerText = "Error: Unable to fetch prediction.";
+        document.getElementById("Model Response").innerText = "Error: Unable to fetch prediction.";
     }
 }
 window.sendData = sendData;

@@ -23,59 +23,80 @@
 // }
 
 // export default App;
-import React, { useState } from "react";
+// import React, { useState } from "react";
 
-const PredictionTool = () => {
-    const [input, setInput] = useState("");
-    const [result, setResult] = useState("Result will appear here.");
-    const [loading, setLoading] = useState(false);
+// const PredictionTool = () => {
+//     const [input, setInput] = useState("");
+//     const [result, setResult] = useState("Result will appear here.");
+//     const [loading, setLoading] = useState(false);
 
-    const getPrediction = async (inputData) => {
-        setLoading(true);
-        try {
-            const response = await fetch("http://127.0.0.1:8000/predict/GOV/", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ input: inputData }),
-            });
-            console.log(JSON.stringify({ input: inputData }));
+//     const getPrediction = async (inputData) => {
+//         setLoading(true);
+//         try {
+//             const response = await fetch("http://127.0.0.1:8000/predict/GOV/", {
+//                 method: "POST",
+//                 headers: { "Content-Type": "application/json" },
+//                 body: JSON.stringify({ input: inputData }),
+//             });
+//             console.log(JSON.stringify({ input: inputData }));
 
-            if (!response.ok) throw new Error("Failed to fetch prediction");
-            const data = await response.json();
-            setResult(`Result: ${data.result}`);
-        } catch (error) {
-            console.error("Error:", error);
-            setResult("Error: Unable to fetch prediction.");
-        } finally {
-            setLoading(false);
-        }
-    };
+//             if (!response.ok) throw new Error("Failed to fetch prediction");
+//             const data = await response.json();
+//             setResult(`Result: ${data.result}`);
+//         } catch (error) {
+//             console.error("Error:", error);
+//             setResult("Error: Unable to fetch prediction.");
+//         } finally {
+//             setLoading(false);
+//         }
+//     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        getPrediction(input);
-    };
+//     const handleSubmit = (event) => {
+//         event.preventDefault();
+//         getPrediction(input);
+//     };
 
-    return (
-        <div>
-            <h1>AI Prediction Tool</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="input">Enter your data:</label>
-                <input
-                    id="input"
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    required
-                />
-                <button type="submit" disabled={loading}>
-                    {loading ? "Loading..." : "Get Prediction"}
-                </button>
-            </form>
-            <p>{result}</p>
-        </div>
-    );
-};
+//     return (
+//         <div>
+//             <h1>AI Prediction Tool</h1>
+//             <form onSubmit={handleSubmit}>
+//                 <label htmlFor="input">Enter your data:</label>
+//                 <input
+//                     id="input"
+//                     type="text"
+//                     value={input}
+//                     onChange={(e) => setInput(e.target.value)}
+//                     required
+//                 />
+//                 <button type="submit" disabled={loading}>
+//                     {loading ? "Loading..." : "Get Prediction"}
+//                 </button>
+//             </form>
+//             <p>{result}</p>
+//         </div>
+//     );
+// };
 
-export default PredictionTool;
+// export default PredictionTool;
+
+async function sendData() {
+    const inputData = document.getElementById("inputData").value;
+    const apiUrl = "http://localhost:8000/predict/"; // Update this URL to match your backend
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ input: inputData }),
+        });
+
+        if (!response.ok) throw new Error("Failed to get response from the server");
+
+        const data = await response.json();
+        document.getElementById("result").innerText = data.result;
+    } catch (error) {
+        console.error(error);
+        document.getElementById("result").innerText = "Error: Unable to fetch prediction.";
+    }
+}
 

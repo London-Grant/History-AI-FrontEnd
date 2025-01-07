@@ -81,7 +81,7 @@
 
 async function sendData() {
     const inputData = document.getElementById("inputData").value;
-    const apiUrl = "https://83c8-108-56-193-11.ngrok-free.app/predict/GOV/"; // Backend URL, leads to ngrok
+    const apiUrl = "https://charmed-crane-easy.ngrok-free.app/predict/GOV/"; // Backend URL, leads to ngrok
 
     try {
         const response = await fetch(apiUrl, {

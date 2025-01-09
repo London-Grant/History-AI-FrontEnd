@@ -97,8 +97,16 @@ async function sendData() {
         document.getElementById("Model Response").innerText = data.result;
     } catch (error) {
         console.error(error);
-        console.log(`For my testing, here is the error message ${error.message}`);
-        document.getElementById("Model Response").innerText = "Error: Unable to fetch prediction.";
+        switch (error.message) {
+            case "Failed to fetch":
+                document.getElementById("Model Response").innerText = "Error: The server is turned off. Check back later";
+                
+                break;
+            default:
+                document.getElementById("Model Response").innerText = "Error: Unable to fetch prediction.";
+                break;
+        }
+        
     }
 }
 window.sendData = sendData;

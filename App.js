@@ -97,6 +97,7 @@ async function sendData() {
         document.getElementById("Model Response").innerText = data.result;
     } catch (error) {
         console.error(error);
+        console.log(`For my testing, here is the error message ${error.message}`);
         document.getElementById("Model Response").innerText = "Error: Unable to fetch prediction.";
     }
 }

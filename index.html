@@ -2,30 +2,73 @@
 <html lang="en">
 <!-- Hey you shouldn't be here, this is my very important front end (I have no idea how html works)-->
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My AI Tool</title>
-</head>
-<body>
-    <h1>Welcome to my AP GOV AI Tool</h1>
-    <p>This tool is for AP Governemnt students (with APUSH support coming soon). I do not sanction the usage of this tool for cheating in any way. 
-        Rather, use this tool to help yourself study, catch up on missed days, and create study guides for yourself. Have fun! 
-        (Also it's a little buggy. Some issue with the AI API is causing oddd hallucinations. Trying to fix it, we'll see)
-    </p>
-    <br>
-    <p>Enter your query in the little box below:</p>
-    <textarea id="inputData" rows="5" cols="80" placeholder="Type something here..."></textarea>
-    <br>
-    <button onclick="sendData()">Submit</button>
-    <p>Result:</p>
-    <div id="Model Response"></div>
-
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    
     <!-- Link to the frontend.js file -->
     <script src="App.js"></script>
-    <br>
-    <br>
-    <p> So what's next for this tool? <p>
-    <p> After adding APUSH support, I'm going to create a tab system to find the different tools.
-        Then, I'll look into refining the model such that the user can say "Hey I like this, it's a good response," and I can tune the model based on that.<p>
+</head>
+<body>
+    <div class="navBar">
+
+        <h1><span id="a">A</span><span id="p">P</span> Government AI Tool</h1>
+
+        <ul class="navLinks">
+
+            <!-- Link button to APUSH when finished-->
+            <li><button>APUSH (Coming Soon)</button></li>
+
+        </ul>
+
+    </div>
+    <div class="main">
+
+        <div class="description">
+
+            <p>This tool is for AP Government students (with APUSH support coming soon). I do not sanction the usage of this tool for cheating in any way. 
+            Rather, use this tool to help yourself study, catch up on missed days, and create study guides for yourself. Have fun! 
+            (Also it's a little buggy. Some issue with the AI API is causing oddd hallucinations. Trying to fix it, we'll see)
+            </p>
+
+        </div>
+
+        <div class="query card">
+
+            <h2>Enter your query in the box below:</h2>
+            <textarea id="inputData" rows="16" cols="80" placeholder="Type something here..."></textarea>
+
+            <br>
+            <button onclick="sendData()">Submit</button>
+
+        </div>
+
+        <div class="model-response card">
+            
+            <div class="text">
+                <h2>Output:</h2>
+            </div>
+
+            <div class="output">
+                <!--Whatever your program outputs goes here-->
+            </div>
+
+        </div>
+
+        <div class="future">
+            <br>
+            <br>
+            <h3> So what's next for this tool? </h3>
+            <p> After adding APUSH support, I'm going to create a tab system to find the different tools.
+                Then, I'll look into refining the model such that the user can say "Hey I like this, it's a good response," and I can tune the model based on that.<p>
+        </div>
+
+    </div>
+    
 </body>
 </html>

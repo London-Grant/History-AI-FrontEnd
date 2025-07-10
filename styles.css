@@ -1,0 +1,163 @@
+body {
+    font-family: "Montserrat", sans-serif;
+    color: #495057;
+    background-color: #e9ecef;
+    margin:0;
+}
+
+p {
+    font-size: 1.15rem;
+}
+
+#a {
+    color: #28ABE2;
+    font-family: "PT Serif", serif;
+}
+
+#p {
+    color: #96C950;
+    font-family: "PT Serif", serif;
+}
+
+.navBar {
+    background-color: #343a40;
+    color: white;
+    height:70px;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding:0 2rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.navLinks {
+    list-style:none;
+    display: flex;
+    justify-content: flex-end;
+    gap:2.5rem;
+    margin:0;
+    padding: 0;
+}
+
+button  {
+    background-color: #343a40;
+    color: white;
+    font-size: 1.3rem;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+    transition: transform 0.3s ease-in-out;
+    border-radius: 15px;
+    border: 5px solid #343a40;
+}
+
+body > div.main > div.query.card > button {
+    text-transform: uppercase;
+    position: relative;
+    bottom:75px;
+    left:15px;
+    padding: 10px 40px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+body > div.navBar > ul > li > button:hover {
+    transform: scale(103%);
+    color: #e9ecef;
+}
+
+body > div.main > div.query > button:hover {
+    color: #e9ecef;
+}
+
+.main {
+    width: 90%;
+    padding:10px 10px;
+    margin-left: 5%;
+}
+
+.description {
+    margin-top:3rem;
+    margin-bottom: 4rem;
+}
+
+.query.card {
+    float: left;
+    text-transform: uppercase;
+}
+
+.model-response.card {
+    float:right;
+}
+
+#inputData {
+    padding:30px;
+    border-radius: 20px;
+    border: 2px solid #343a40;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-right: 52px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.model-response.card {
+    width:680px;
+}
+
+.output {
+    border-radius: 20px;
+    border: 2px solid #343a40;
+    background-color:#ffffff;
+    width:650px;
+    height: 350px;
+    float: right;
+    margin-right: 30px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+h2,h3 {
+    margin-top: 0;
+}
+
+.future {
+    clear:both;
+}
+
+/* enlarges the boxes a little */
+@media (min-width:2000px) {
+    #inputData {
+        width: 830px;
+    }
+    .output {
+        width:830px;
+    }
+    .model-response.card {
+        width:860px;
+    }
+}
+
+/* Tablet size */
+@media (max-width:1540px) {
+    .query.card {
+    float: left;
+    margin-bottom: 40px;
+    }
+
+    .model-response.card {
+        float:left;
+    }
+}
+
+/* mobile size */
+@media (max-width:710px) {
+    .navBar {
+        padding:20px;
+    }
+    #inputData {
+        width: 360px;
+    }
+    .output {
+        width:400px;
+        float:left;
+    }
+}

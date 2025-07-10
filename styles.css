@@ -5,6 +5,10 @@ body {
     margin:0;
 }
 
+p {
+    font-size: 1.15rem;
+}
+
 #a {
     color: #28ABE2;
     font-family: "PT Serif", serif;
@@ -24,6 +28,7 @@ body {
     flex-wrap: nowrap;
     justify-content: space-between;
     padding:0 2rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .navLinks {
@@ -44,9 +49,17 @@ button  {
     border: none;
     font-weight: bold;
     transition: transform 0.3s ease-in-out;
-    padding: 5px 8px;
     border-radius: 15px;
     border: 5px solid #343a40;
+}
+
+body > div.main > div.query.card > button {
+    text-transform: uppercase;
+    position: relative;
+    bottom:75px;
+    left:15px;
+    padding: 10px 40px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 body > div.navBar > ul > li > button:hover {
@@ -65,12 +78,13 @@ body > div.main > div.query > button:hover {
 }
 
 .description {
-    margin-top:2rem;
-    margin-bottom: 2rem;
+    margin-top:3rem;
+    margin-bottom: 4rem;
 }
 
 .query.card {
     float: left;
+    text-transform: uppercase;
 }
 
 .model-response.card {
@@ -82,8 +96,8 @@ body > div.main > div.query > button:hover {
     border-radius: 20px;
     border: 2px solid #343a40;
     font-family: Arial, Helvetica, sans-serif;
-    margin-bottom: 10px;
     margin-right: 52px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .model-response.card {
@@ -98,15 +112,17 @@ body > div.main > div.query > button:hover {
     height: 350px;
     float: right;
     margin-right: 30px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-h2 {
+h2,h3 {
     margin-top: 0;
 }
 
 .future {
-    clear: both;
+    clear:both;
 }
+
 /* enlarges the boxes a little */
 @media (min-width:2000px) {
     #inputData {

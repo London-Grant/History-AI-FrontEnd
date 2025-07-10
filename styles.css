@@ -21,6 +21,9 @@ p {
 
 .navBar {
     background-color: #343a40;
+    position: fixed;
+    width:100%;
+    left:0;
     color: white;
     height:70px;
     display: flex;
@@ -35,8 +38,8 @@ p {
     list-style:none;
     display: flex;
     justify-content: flex-end;
-    gap:2.5rem;
-    margin:0;
+    gap:2rem;
+    margin:60px;;
     padding: 0;
 }
 
@@ -78,7 +81,7 @@ body > div.main > div.query > button:hover {
 }
 
 .description {
-    margin-top:3rem;
+    margin-top:6rem;
     margin-bottom: 4rem;
 }
 

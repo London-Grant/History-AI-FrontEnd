@@ -53,12 +53,12 @@ button  {
     border: 5px solid #343a40;
 }
 
-body > div.main > div.query.card > button {
+body > div.main > div.boxFlexContainer > div.query.card > button {
     text-transform: uppercase;
     position: relative;
     bottom:75px;
-    left:15px;
-    padding: 10px 40px;
+    left:470px;
+    padding: 10px 30px;
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -83,35 +83,36 @@ body > div.main > div.query > button:hover {
 }
 
 .query.card {
-    float: left;
     text-transform: uppercase;
 }
 
-.model-response.card {
-    float:right;
+.boxFlexContainer {
+    display:flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 
 #inputData {
+    flex-basis: 650px;
     padding:30px;
     border-radius: 20px;
     border: 2px solid #343a40;
     font-family: Arial, Helvetica, sans-serif;
-    margin-right: 52px;
+    margin-right: 30px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .model-response.card {
-    width:680px;
+    width:650px;
+    margin-right: 20px;;
 }
 
 .output {
     border-radius: 20px;
     border: 2px solid #343a40;
     background-color:#ffffff;
-    width:650px;
+    flex-basis:640px;
     height: 350px;
-    float: right;
-    margin-right: 30px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -123,41 +124,20 @@ h2,h3 {
     clear:both;
 }
 
-/* enlarges the boxes a little */
-@media (min-width:2000px) {
-    #inputData {
-        width: 830px;
-    }
-    .output {
-        width:830px;
-    }
-    .model-response.card {
-        width:860px;
-    }
-}
-
-/* Tablet size */
-@media (max-width:1540px) {
-    .query.card {
-    float: left;
-    margin-bottom: 40px;
-    }
-
-    .model-response.card {
-        float:left;
-    }
-}
 
 /* mobile size */
-@media (max-width:710px) {
+@media (max-width:730px) {
+    body > div.main > div.boxFlexContainer > div.query.card > button {
+        left:230px;
+    }
     .navBar {
-        padding:20px;
+        font-size: 0.6rem;
     }
+    body > div.navBar > ul > li > button {
+        font-size: 0.8rem;
+    }
+    
     #inputData {
-        width: 360px;
-    }
-    .output {
-        width:400px;
-        float:left;
+        width: 330px;
     }
 }

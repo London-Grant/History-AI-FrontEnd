@@ -57,7 +57,7 @@ body > div.main > div.boxFlexContainer > div.query.card > button {
     text-transform: uppercase;
     position: relative;
     bottom:75px;
-    left:470px;
+    left:450px;
     padding: 10px 30px;
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

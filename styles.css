@@ -60,7 +60,7 @@ body > div.main > div.boxFlexContainer > div.query.card > button {
     text-transform: uppercase;
     position: relative;
     bottom:75px;
-    left:450px;
+    left:470px;
     padding: 10px 30px;
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -118,7 +118,7 @@ body > div.main > div.boxFlexContainer > div.query.card > button:hover {
 
 .model-response.card {
     width:650px;
-    margin-right: 20px;;
+    margin-right: 20px;
 }
 
 .output {
@@ -134,6 +134,18 @@ h2,h3 {
     margin-top: 0;
 }
 
+h3 {
+    border-bottom: 2px solid;
+    border-image: linear-gradient(45deg, #28ABE2,#96C950);
+    border-image-slice: 1;
+    display: inline-block;
+    margin-bottom: 0px;
+}
+
+p {
+    margin-top: 10px;
+}
+
 .future {
     clear:both;
 }
@@ -145,7 +157,7 @@ h2,h3 {
         left:230px;
     }
     .navBar {
-        font-size: 0.6rem;
+        font-size: 0.5rem;
     }
     body > div.navBar > ul > li > button {
         font-size: 0.8rem;

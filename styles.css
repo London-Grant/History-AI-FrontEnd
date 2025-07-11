@@ -49,8 +49,8 @@ button  {
     font-size: 1.3rem;
     text-align: center;
     cursor: pointer;
-    border: none;
     font-weight: bold;
+    position: relative;
     transition: transform 0.3s ease-in-out;
     border-radius: 15px;
     border: 5px solid #343a40;
@@ -65,12 +65,23 @@ body > div.main > div.boxFlexContainer > div.query.card > button {
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-body > div.navBar > ul > li > button:hover {
-    transform: scale(103%);
+body > div.navBar > ul > li > button::after {
+    position: absolute;
+    content: '';
+    height: 3px;
+    left:0;
+    bottom:-1px;
+    width: 0%;
+    background: linear-gradient(45deg, #28ABE2,#96C950);
+    transition: width .2s;
     color: #e9ecef;
 }
 
-body > div.main > div.query > button:hover {
+body > div.navBar > ul > li > button:hover::after {
+    width: 100%;
+}
+
+body > div.main > div.boxFlexContainer > div.query.card > button:hover {
     color: #e9ecef;
 }
 

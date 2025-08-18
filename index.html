@@ -22,7 +22,8 @@
         <ul class="navLinks">
 
             <!-- Link button to APUSH when finished-->
-            <li><button>APUSH (Coming Soon)</button></li>
+             <li><button>Home</button></li>
+            <li><button>APUSH</button></li>
 
         </ul>
 
@@ -30,7 +31,7 @@
     <div class="main">
 
         <div class="description">
-
+            <h3>What is this?</h3>
             <p>This tool is for AP Government students (with APUSH support coming soon). I do not sanction the usage of this tool for cheating in any way. 
             Rather, use this tool to help yourself study, catch up on missed days, and create study guides for yourself. Have fun! 
             (Also it's a little buggy. Some issue with the AI API is causing oddd hallucinations. Trying to fix it, we'll see)
@@ -38,26 +39,28 @@
 
         </div>
 
-        <div class="query card">
+        <div class="boxFlexContainer">
+            <div class="query card">
 
-            <h2>Enter your query in the box below</h2>
-            <textarea id="inputData" rows="19" cols="80" placeholder="Type something here..."></textarea>
+                <h2>Enter your query</h2>
+                <textarea id="inputData" rows="19" cols="80" placeholder="Type something here..."></textarea>
 
-            <br>
-            <button onclick="sendData()">Submit</button>
+                <br>
+                <button onclick="sendData()">Submit</button>
 
-        </div>
-
-        <div class="model-response card">
-            
-            <div class="text">
-                <h2>OUTPUT</h2>
             </div>
 
-            <div class="output">
-                <!--Whatever your program outputs goes here-->
-            </div>
+            <div class="model-response card">
+                
+                <div class="text">
+                    <h2>OUTPUT</h2>
+                </div>
 
+                <div class="output">
+                    <!--Whatever your program outputs goes here-->
+                </div>
+
+            </div>
         </div>
 
         <div class="future">

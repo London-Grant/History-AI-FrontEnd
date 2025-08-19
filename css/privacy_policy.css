@@ -1,0 +1,67 @@
+/* General Layout */
+body {
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background: #f9f9f9;
+    color: #333;
+}
+
+/* Header */
+header {
+    background: #1a1a1a;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8em;
+}
+
+/* Content */
+main {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+/* Section headings */
+h2 {
+    margin-top: 40px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 8px;
+    font-size: 1.4em;
+    color: #222;
+}
+
+/* Paragraphs */
+p {
+    margin: 15px 0;
+}
+
+/* Lists */
+ul {
+    padding-left: 20px;
+    margin: 10px 0;
+}
+
+ul li {
+    margin: 8px 0;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9em;
+    color: #777;
+}

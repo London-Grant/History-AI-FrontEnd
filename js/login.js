@@ -5,7 +5,7 @@ document.getElementById("tiktokLogin").addEventListener("click", () => {
     // TODO: Add a function for this in the backend, and then create a config with developer credentials 
       const clientKey = "sbaw9y0gyp43g6nq3x";
 
-      const redirectUri = encodeURIComponent("https://yourfrontend.com/portal.html"); 
+      const redirectUri = encodeURIComponent("https://london-grant.github.io/History-AI-FrontEnd/portal.html"); 
       const scope = encodeURIComponent("user.info.basic,video.upload");
       const responseType = "code";
 

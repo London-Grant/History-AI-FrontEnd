@@ -9,7 +9,7 @@ document.getElementById("tiktokLogin").addEventListener("click", () => {
       const scope = encodeURIComponent("user.info.basic,video.upload");
       const responseType = "code";
 
-      const authUrl = `https://www.tiktok.com/auth/authorize/?client_key=${clientKey}&scope=${scope}&response_type=${responseType}&redirect_uri=${redirectUri}&state=xyz123`;
+      const authUrl = `https://www.tiktok.com/v2/auth/authorize/?client_key=${clientKey}&scope=${scope}&response_type=${responseType}&redirect_uri=${redirectUri}&state=xyz123`;
 
       window.location.href = authUrl;
     });

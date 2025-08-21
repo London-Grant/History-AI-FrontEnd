@@ -10,6 +10,7 @@ temp_token = URLSearchParams(window.location.search).get("code")
 nll = await fetch(backend_url_base + "/tiktok/auth/", {
     body: { "code": temp_token }
 });
+console.log(nll)
 
 videoInput.addEventListener('change', () => {
     const file = videoInput.files[0];

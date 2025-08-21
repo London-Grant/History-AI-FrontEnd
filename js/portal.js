@@ -1,5 +1,5 @@
 // Display video preview
-const backend_url_base = "https://charmed-crane-easy.ngrok-free.app/"
+const backend_url_base = "https://charmed-crane-easy.ngrok-free.app"
 
 const videoInput = document.getElementById('videoFile');
 const videoPreview = document.getElementById('videoPreview');
@@ -51,7 +51,7 @@ document.getElementById('uploadBtn').addEventListener('click', async () => {
 
     try {
     // Send to backend endpoint
-    const response = await fetch('https://your-backend.com/upload_video', {
+    const response = await fetch( backend_url_base + '/upload_video/', {
         method: 'POST',
         body: formData
     });

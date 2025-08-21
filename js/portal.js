@@ -9,7 +9,6 @@ async function UpdateDB(){
 
     nll = await fetch(backend_url_base + `/tiktok/auth/?code=${temp_token}`, {
         method: "POST",
-        body: form
     });
     data = await response.json();
     console.log(data)

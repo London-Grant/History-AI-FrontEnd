@@ -8,6 +8,7 @@ const videoPreview = document.getElementById('videoPreview');
 temp_token = new URLSearchParams(window.location.search).get("code")
 
 nll = fetch(backend_url_base + "/tiktok/auth/", {
+    method: "POST",
     body: { "code": temp_token }
 });
 console.log(nll)

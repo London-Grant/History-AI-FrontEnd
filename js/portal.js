@@ -5,7 +5,7 @@ const videoInput = document.getElementById('videoFile');
 const videoPreview = document.getElementById('videoPreview');
 
 async function UpdateDB(){
-    temp_token = new URLSearchParams(window.location.search).get("code")
+    temp_token = encodeURIComponent(new URLSearchParams(window.location.search).get("code"));
 
     nll = await fetch(backend_url_base + `/tiktok/auth/?code=${temp_token}`, {
         method: "POST",

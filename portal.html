@@ -1,13 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Placeholder Portal</title>
-  <!-- <link rel="stylesheet" href="css/tos.css"> -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal</title>
+  <link rel="stylesheet" href="css/portal.css">
 </head>
 <body>
-  <header>
-    <h1>Welcome to the portal!</h1>
-  <header>
-<body>
+  <div class="portal-container">
+    <h2>Upload Video</h2>
+
+    <label for="platform">Select Platform</label>
+    <select id="platform">
+      <option value="tiktok" selected>TikTok</option>
+      <!-- Future platforms can be added here -->
+    </select>
+
+    <label for="videoFile">Choose Video</label>
+    <input type="file" id="videoFile" accept="video/*">
+
+    <video id="videoPreview" controls style="display:none;"></video>
+
+    <label for="title">Title</label>
+    <input type="text" id="title" placeholder="Video title">
+
+    <label for="description">Description</label>
+    <textarea id="description" rows="3" placeholder="Video description"></textarea>
+
+    <label for="hashtags">Hashtags (comma-separated)</label>
+    <input type="text" id="hashtags" placeholder="#example,#fun">
+
+    <button id="uploadBtn">Upload</button>
+
+    <p id="status"></p>
+  </div>
+  <script src="js/portal.js"></script>
+</body>
+</html>

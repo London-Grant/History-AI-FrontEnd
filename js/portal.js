@@ -4,16 +4,15 @@ const backend_url_base = "https://charmed-crane-easy.ngrok-free.app"
 const videoInput = document.getElementById('videoFile');
 const videoPreview = document.getElementById('videoPreview');
 
-function UpdateDB(){
+async function UpdateDB(){
     temp_token = new URLSearchParams(window.location.search).get("code")
-    const form = new FormData()
-    form.append('code', temp_token)
 
-    nll = fetch(backend_url_base + "/tiktok/auth/", {
+    nll = await fetch(backend_url_base + `/tiktok/auth/?code=${temp_token}`, {
         method: "POST",
         body: form
     });
-    console.log(nll)
+    data = await response.json();
+    console.log(data)
 
 }; UpdateDB();
 

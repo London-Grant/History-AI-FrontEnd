@@ -5,7 +5,7 @@ const videoInput = document.getElementById('videoFile');
 const videoPreview = document.getElementById('videoPreview');
 
 
-temp_token = URLSearchParams(window.location.search).get("code")
+temp_token = new URLSearchParams(window.location.search).get("code")
 
 nll = fetch(backend_url_base + "/tiktok/auth/", {
     body: { "code": temp_token }

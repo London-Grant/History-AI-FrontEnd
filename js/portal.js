@@ -36,9 +36,7 @@ videoInput.addEventListener('change', () => {
 // Handle upload button
 document.getElementById('uploadBtn').addEventListener('click', async () => {
     const platform = document.getElementById('platform').value;
-    const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
-    const hashtags = document.getElementById('hashtags').value;
     const file = videoInput.files[0];
     const statusEl = document.getElementById('status');
 
@@ -53,15 +51,17 @@ document.getElementById('uploadBtn').addEventListener('click', async () => {
 
     // Prepare form data
     const formData = new FormData();
-    formData.append('platform', platform);
-    formData.append('title', title);
     formData.append('description', description);
-    formData.append('hashtags', hashtags);
     formData.append('video', file);
+
+    const getCookieValue = (name) => (
+        document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
+    )
+    formData.append('open_id', getCookieValue("open_id"))
 
     try {
     // Send to backend endpoint
-    const response = await fetch( backend_url_base + '/upload_video/', {
+    const response = await fetch( backend_url_base + '/tiktok/post/', {
         method: 'POST',
         body: formData
     });

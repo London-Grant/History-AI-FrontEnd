@@ -54,10 +54,15 @@ document.getElementById('uploadBtn').addEventListener('click', async () => {
     formData.append('video', file);
 
     function getCookie(name) {
-        const m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
-        return m ? decodeURIComponent(m[1]): null;
+        name = name.replace(/([.*+?^=!:\${}()|\[\]\/\\])/g, '\\$1');
+        console.log("CSL ", name)
+        const regex = new RegExp('(?:^|; )' + name + '=(.*?)(?:;|$)', 'i');
+        console.log("Regex: ", regex)
+        const match = document.cookie.match(regex);
+        console.log(match)
+        return match ? decodeURIComponent(match[1]) : null;
     }
-    open_id = getCookie('open_id')
+    const open_id = getCookie('open_id')
     console.log(open_id)
 
     if (!open_id){ console.log("Cookie was not saved"); return;}

@@ -35,7 +35,6 @@ videoInput.addEventListener('change', () => {
 
 // Handle upload button
 document.getElementById('uploadBtn').addEventListener('click', async () => {
-    const platform = document.getElementById('platform').value;
     const description = document.getElementById('description').value;
     const file = videoInput.files[0];
     const statusEl = document.getElementById('status');
@@ -57,6 +56,8 @@ document.getElementById('uploadBtn').addEventListener('click', async () => {
     const getCookieValue = (name) => (
         document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
     )
+    open_id = getCookieValue("open_id")
+    console.log(open_id)
     formData.append('open_id', getCookieValue("open_id"))
 
     try {

@@ -53,12 +53,21 @@ document.getElementById('uploadBtn').addEventListener('click', async () => {
     formData.append('description', description);
     formData.append('video', file);
 
-    const getCookieValue = (name) => (
-        document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
-    )
-    open_id = getCookieValue("open_id")
+    function getCookie(name) {
+        const cookies = document.cookie.split(';');
+        console.log(cookies)
+        for (let c of cookies) {
+            const [key, ...rest] = c.trim().split('=');
+            if (key === name) {
+            return decodeURIComponent(rest.join('='));
+            }
+        }
+        return null;
+    }
+    open_id = getCookie("open_id")
+    if (!open_id){ console.log("Cookie was not saved"); return;}
     console.log(open_id)
-    formData.append('open_id', getCookieValue("open_id"))
+    formData.append('open_id', open_id)
 
     try {
     // Send to backend endpoint

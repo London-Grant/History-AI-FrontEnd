@@ -53,14 +53,20 @@ document.getElementById('uploadBtn').addEventListener('click', async () => {
     formData.append('description', description);
     formData.append('video', file);
 
-    function getCookie(name) {
-        name = name.replace(/([.*+?^=!:\${}()|\[\]\/\\])/g, '\\$1');
-        console.log("CSL ", name)
-        const regex = new RegExp('(?:^|; )' + name + '=(.*?)(?:;|$)', 'i');
-        console.log("Regex: ", regex)
-        const match = document.cookie.match(regex);
-        console.log(match)
-        return match ? decodeURIComponent(match[1]) : null;
+    function getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+            }
+        }
+        return "";
     }
     const open_id = getCookie('open_id')
     console.log(open_id)
@@ -70,7 +76,7 @@ document.getElementById('uploadBtn').addEventListener('click', async () => {
 
     try {
     // Send to backend endpoint
-    const response = await fetch( backend_url_base + '/tiktok/post/', {
+    const response = await fetch(backend_url_base + '/tiktok/post/', {
         method: 'POST',
         body: formData
     });

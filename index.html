@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login with TikTok</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign In • Managed History</title>
   <link rel="stylesheet" href="css/login.css">
-  
 </head>
 <body>
-  <div class="login-container">
-    <h2>Sign In</h2>
-    <a class="tiktok-btn" id="tiktokLogin">
-      <img class="tiktok-logo" src="https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg" alt="TikTok logo">
-      Sign in with TikTok
-    </a>
+  <div class="login-wrapper">
+    <div class="login-box">
+      <div class="logo">MH</div>
+      <h2>Welcome</h2>
+      <p class="subtext">Sign in to manage your video dashboard</p>
+      <a class="tiktok-btn" id="tiktokLogin" role="button">
+        <img class="tiktok-logo" src="https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg" alt="TikTok logo">
+        Continue with TikTok
+      </a>
+      <p class="policy-text">
+        By signing in, you agree to our 
+        <a href="/privacy.html" target="_blank">Privacy Policy</a> and 
+        <a href="/TOS.html" target="_blank">Terms of Service</a>.
+      </p>
+    </div>
   </div>
   <script src="js/login.js"></script>
 </body>
 </html>
+

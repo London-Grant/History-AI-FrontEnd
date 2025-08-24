@@ -2,32 +2,50 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portal</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard • Managed History</title>
   <link rel="stylesheet" href="css/portal.css">
 </head>
 <body>
-  <div class="portal-container">
-    <h2>Upload Video</h2>
+  <header class="header">
+    <div class="logo">MH</div>
+    <h1>Your Video Portal</h1>
+  </header>
 
-    <label for="platform">Select Platform</label>
-    <select id="platform">
-      <option value="tiktok" selected>TikTok</option>
-      <!-- Future platforms can be added here -->
-    </select>
+  <main class="portal-container">
+    <h2>Upload to TikTok</h2>
+    <form id="uploadForm">
+      <div class="form-group">
+        <label for="platform">Platform</label>
+        <select id="platform" name="platform" disabled>
+          <option value="tiktok" selected>TikTok</option>
+        </select>
+      </div>
 
-    <label for="videoFile">Choose Video</label>
-    <input type="file" id="videoFile" accept="video/*">
+      <div class="form-group">
+        <label for="videoFile">Video File</label>
+        <input type="file" id="videoFile" name="video" accept="video/*" required>
+      </div>
 
-    <video id="videoPreview" controls style="display:none;"></video>
+      <video id="videoPreview" controls hidden></video>
 
-    <label for="description">Description</label>
-    <textarea id="description" rows="3" placeholder="Video description"></textarea>
+      <div class="form-group">
+        <label for="description">Description / Hashtags</label>
+        <textarea id="description" name="description" rows="3" placeholder="Add a caption, hashtags like #FYI"></textarea>
+      </div>
 
-    <button id="uploadBtn">Upload</button>
+      <button type="submit">Upload Video</button>
+    </form>
 
-    <p id="status"></p>
-  </div>
+    <p id="status" aria-live="polite"></p>
+  </main>
+
+  <footer class="footer">
+    <a href="/privacy.html" target="_blank">Privacy Policy</a>
+    |
+    <a href="/TOS.html" target="_blank">Terms of Service</a>
+  </footer>
+
   <script src="js/portal.js"></script>
 </body>
 </html>

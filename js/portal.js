@@ -13,7 +13,7 @@ async function UpdateDB(){
     data = await nll.json();
     console.log(data)
     if (data && data.open_id){
-        const openID = data.openID
+        const openID = data.open_id
         console.log(openID)
         document.cookie = `open_id=${openID}; path=/; max-age=${365 * 24 * 60 * 60}; SameSite=Lax` 
     } else{console.log("No OpenID was returned. Try again")}

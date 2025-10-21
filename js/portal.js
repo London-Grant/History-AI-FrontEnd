@@ -14,6 +14,7 @@ async function UpdateDB(){
     console.log(data)
     if (data && data.open_id){
         const openID = data.openID
+        console.log(openID)
         document.cookie = `open_id=${openID}; path=/; max-age=${365 * 24 * 60 * 60}; SameSite=Lax` 
     } else{console.log("No OpenID was returned. Try again")}
 

@@ -58,7 +58,9 @@ videoInput.addEventListener('change', () => {
 });
 
 // Handle upload button
-document.getElementById('uploadBtn').addEventListener('click', async () => {
+document.getElementById('uploadBtn').addEventListener('click', async (e) => {
+    
+    e.preventDefault();
     const description = document.getElementById('description').value;
     const file = videoInput.files[0];
     const statusEl = document.getElementById('status');
@@ -99,9 +101,9 @@ document.getElementById('uploadBtn').addEventListener('click', async () => {
             statusEl.textContent = "Upload failed: " + (data.error || "Unknown error");
             statusEl.className = "error";
         }
-        } catch (err) {
+    } catch (err) {
         console.error(err);
         statusEl.textContent = "An error occurred during upload.";
         statusEl.className = "error";
-        }
+    }
 });

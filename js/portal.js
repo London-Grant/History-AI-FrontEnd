@@ -4,8 +4,29 @@ const backend_url_base = "https://charmed-crane-easy.ngrok-free.app"
 const videoInput = document.getElementById('videoFile');
 const videoPreview = document.getElementById('videoPreview');
 
-async function UpdateDB(){
-    temp_token = encodeURIComponent(new URLSearchParams(window.location.search).get("code"));
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i].trim();
+        if (c.indexOf(name) === 0) {
+            return c.substring(name.length);
+        }
+    }
+    return "";
+}
+
+async function UpdateDB() {
+    temp_token = new URLSearchParams(window.location.search).get("code");
+    if (!temp_token) return;
+
+    if (getCookie("open_id")) {
+        window.history.replaceState({}, document.title, window.location.pathname);
+        return;
+    }
+
+    temp_token = encodeURIComponent(temp_token);
 
     nll = await fetch(backend_url_base + `/tiktok/auth/?code=${temp_token}`, {
         method: "POST",
@@ -15,10 +36,12 @@ async function UpdateDB(){
     if (data && data.open_id){
         const openID = data.open_id
         console.log(openID)
-        document.cookie = `open_id=${openID}; path=/; max-age=${365 * 24 * 60 * 60}; SameSite=Lax` 
+        document.cookie = `open_id=${openID}; path=/; max-age=${365 * 24 * 60 * 60}; SameSite=Lax`
+        window.history.replaceState({}, document.title, window.location.pathname);
     } else{console.log("No OpenID was returned. Try again")}
+};
 
-}; UpdateDB();
+UpdateDB();
 
 
 
@@ -41,9 +64,9 @@ document.getElementById('uploadBtn').addEventListener('click', async () => {
     const statusEl = document.getElementById('status');
 
     if (!file) {
-    statusEl.textContent = "Please select a video to upload.";
-    statusEl.className = "error";
-    return;
+        statusEl.textContent = "Please select a video to upload.";
+        statusEl.className = "error";
+        return;
     }
 
     statusEl.textContent = "Uploading...";
@@ -54,21 +77,6 @@ document.getElementById('uploadBtn').addEventListener('click', async () => {
     formData.append('description', description);
     formData.append('video', file);
 
-    function getCookie(cname) {
-        let name = cname + "=";
-        let decodedCookie = decodeURIComponent(document.cookie);
-        let ca = decodedCookie.split(';');
-        for(let i = 0; i <ca.length; i++) {
-            let c = ca[i];
-            while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-            }
-        }
-        return "";
-    }
     const open_id = getCookie('open_id')
     console.log(open_id)
 
@@ -77,23 +85,23 @@ document.getElementById('uploadBtn').addEventListener('click', async () => {
 
     try {
     // Send to backend endpoint
-    const response = await fetch(backend_url_base + '/tiktok/post/', {
-        method: 'POST',
-        body: formData
-    });
+        const response = await fetch(backend_url_base + '/tiktok/post/', {
+            method: 'POST',
+            body: formData
+        });
 
-    const data = await response.json();
+        const data = await response.json();
 
-    if (data.success) {
-        statusEl.textContent = "Video uploaded successfully!";
-        statusEl.className = "success";
-    } else {
-        statusEl.textContent = "Upload failed: " + (data.error || "Unknown error");
+        if (data.success) {
+            statusEl.textContent = "Video uploaded successfully!";
+            statusEl.className = "success";
+        } else {
+            statusEl.textContent = "Upload failed: " + (data.error || "Unknown error");
+            statusEl.className = "error";
+        }
+        } catch (err) {
+        console.error(err);
+        statusEl.textContent = "An error occurred during upload.";
         statusEl.className = "error";
-    }
-    } catch (err) {
-    console.error(err);
-    statusEl.textContent = "An error occurred during upload.";
-    statusEl.className = "error";
-    }
+        }
 });

@@ -94,7 +94,7 @@ document.getElementById('uploadBtn').addEventListener('click', async (e) => {
 
         const data = await response.json();
 
-        if (data.success) {
+        if (data.publish_id) {
             statusEl.textContent = "Video uploaded successfully!";
             statusEl.className = "success";
         } else {

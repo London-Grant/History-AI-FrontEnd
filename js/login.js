@@ -4,9 +4,9 @@ const backend_url_base = "https://charmed-crane-easy.ngrok-free.app/"
 document.getElementById("tiktokLogin").addEventListener("click", () => {
     // TODO: Add a function for this in the backend, and then create a config with developer credentials 
       const clientKey = "sbaw9y0gyp43g6nq3x";
-
+      
       const redirectUri = encodeURIComponent("https://london-grant.github.io/History-AI-FrontEnd/portal.html"); 
-      const scope = encodeURIComponent("user.info.basic,video.upload");
+      const scope = encodeURIComponent("user.info.basic,video.publish,video.upload");
       const responseType = "code";
 
       const authUrl = `https://www.tiktok.com/v2/auth/authorize/?client_key=${clientKey}&scope=${scope}&response_type=${responseType}&redirect_uri=${redirectUri}&state=xyz123`;

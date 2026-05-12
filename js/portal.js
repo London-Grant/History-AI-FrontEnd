@@ -64,10 +64,9 @@ async function fetchCreatorInfo() {
     if (!open_id) return;
 
     try {
-        const response = await fetch(backend_url_base + '/tiktok/user_data', {
+        const response = await fetch(backend_url_base + f`/tiktok/user_data/?open_id=${open_id}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ open_id })
         });
         const data = await response.json();
 
@@ -80,7 +79,7 @@ async function fetchCreatorInfo() {
         }
 
         // Req 1a: Display nickname
-        document.getElementById('creatorNickname').textContent = data.nickname;
+        document.getElementById('creatorNickname').textContent = data.creator_nickname;
         document.getElementById('creatorInfo').hidden = false;
 
         // Req 1c: Store max video duration for file-select validation

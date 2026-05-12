@@ -64,7 +64,7 @@ async function fetchCreatorInfo() {
     if (!open_id) return;
 
     try {
-        const response = await fetch(backend_url_base + f`/tiktok/user_data/?open_id=${open_id}`, {
+        const response = await fetch(backend_url_base + `/tiktok/user_data/?open_id=${open_id}`, {
             method: 'POST'
         });
         const data = await response.json();

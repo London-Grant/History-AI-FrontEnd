@@ -48,6 +48,16 @@
         <select id="privacyStatus" name="privacyStatus" required>
           <option value="" disabled selected>Select privacy status</option>
         </select>
+        <!--
+          CHANGE 1 (Req 3b): Added visible warning that replaces the broken opt.title approach.
+          Native <option> elements do not support hover tooltips in any major browser, so
+          setting opt.title on the disabled SELF_ONLY option was silently a no-op. This div
+          is shown/hidden by JS whenever Branded Content is active, satisfying the requirement
+          that users see the "cannot be set to private" message.
+        -->
+        <div id="privacyBrandedWarning" class="field-warning" hidden>
+          ⚠️ Branded content visibility cannot be set to private.
+        </div>
       </div>
 
       <!-- Req 2c: Interaction settings — defaults off, disabled/greyed per API -->
@@ -112,6 +122,13 @@
     </form>
 
     <p id="status" aria-live="polite"></p>
+    <!--
+      CHANGE 2 (Req 5e): Added dedicated element for live publish-status polling updates.
+      After a successful upload the JS polls /tiktok/publish/status/ and writes progress
+      here (PROCESSING_DOWNLOAD → SEND_TO_USER_INBOX → PUBLISH_COMPLETE / FAILED)
+      so the user always knows what is happening with their post.
+    -->
+    <p id="pollStatus" aria-live="polite"></p>
   </main>
 
   <footer class="footer">

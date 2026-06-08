@@ -24,6 +24,19 @@ h2 {
     margin-bottom: 1rem;
 }
 
+
+/* Shown below Privacy dropdown when Branded Content is active */
+.field-warning {
+    color: #b45309;
+    font-size: 0.85rem;
+    margin-top: 4px;
+}
+
+/* Status message for auto-switched privacy */
+#status.info {
+    color: #1d4ed8;
+}
+
 /* ── Creator info banner (Req 1a) ─────────────────────────────────────────── */
 .creator-info {
     background: #f0f0f0;

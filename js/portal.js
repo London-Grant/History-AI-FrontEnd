@@ -1,20 +1,22 @@
 const backend_url_base = "https://charmed-crane-easy.ngrok-free.app"
 
 // ── DOM refs ──────────────────────────────────────────────────────────────────
-const videoInput         = document.getElementById('videoFile');
-const videoPreview       = document.getElementById('videoPreview');
-const uploadBtn          = document.getElementById('uploadBtn');
-const privacySelect      = document.getElementById('privacyStatus');
-const commercialToggle   = document.getElementById('commercialToggle');
-const commercialOptions  = document.getElementById('commercialOptions');
-const yourBrandCheckbox  = document.getElementById('yourBrand');
-const brandedContentChk  = document.getElementById('brandedContent');
-const brandLabel         = document.getElementById('brandLabel');
-const declarationText    = document.getElementById('declarationText');
-const allowComment       = document.getElementById('allowComment');
-const allowDuet          = document.getElementById('allowDuet');
-const allowStitch        = document.getElementById('allowStitch');
-const statusEl           = document.getElementById('status');
+const videoInput             = document.getElementById('videoFile');
+const videoPreview           = document.getElementById('videoPreview');
+const uploadBtn              = document.getElementById('uploadBtn');
+const privacySelect          = document.getElementById('privacyStatus');
+const privacyBrandedWarning  = document.getElementById('privacyBrandedWarning'); // CHANGE 1
+const commercialToggle       = document.getElementById('commercialToggle');
+const commercialOptions      = document.getElementById('commercialOptions');
+const yourBrandCheckbox      = document.getElementById('yourBrand');
+const brandedContentChk      = document.getElementById('brandedContent');
+const brandLabel             = document.getElementById('brandLabel');
+const declarationText        = document.getElementById('declarationText');
+const allowComment           = document.getElementById('allowComment');
+const allowDuet              = document.getElementById('allowDuet');
+const allowStitch            = document.getElementById('allowStitch');
+const statusEl               = document.getElementById('status');
+const pollStatusEl           = document.getElementById('pollStatus'); // CHANGE 2
 
 // Max video duration in seconds, set after creator_info loads (Req 1c)
 let maxVideoDuration = null;
@@ -32,7 +34,7 @@ function getCookie(cname) {
     return "";
 }
 
-// ── OAuth / UpdateDB (unchanged logic) ───────────────────────────────────────
+// ── OAuth / UpdateDB ──────────────────────────────────────────────────────────
 async function UpdateDB() {
     const temp_token = new URLSearchParams(window.location.search).get("code");
     if (!temp_token) return;
@@ -89,6 +91,11 @@ async function fetchCreatorInfo() {
 
         // Req 2c: Grey out / disable interactions the creator has turned off
         configureInteractions(data);
+
+        // CHANGE 3: Re-evaluate button state now that privacy options are populated.
+        // Previously updateUploadBtnState() was never called on init, so the button
+        // would appear enabled before the user had selected a privacy level.
+        updateUploadBtnState();
 
     } catch (err) {
         console.error("Failed to fetch creator info:", err);
@@ -147,7 +154,6 @@ videoInput.addEventListener('change', () => {
             statusEl.className = "error";
             durationError = true;
         } else {
-            // Clear any prior duration error
             if (durationError) {
                 statusEl.textContent = "";
                 statusEl.className = "";
@@ -185,7 +191,6 @@ brandedContentChk.addEventListener('change', () => {
 });
 
 privacySelect.addEventListener('change', () => {
-    // No additional logic needed here beyond normal form state
     updateUploadBtnState();
 });
 
@@ -224,29 +229,67 @@ function updateDeclaration() {
 }
 
 // ── Req 3b: Disable "Only Me" when Branded Content is selected ────────────────
+// CHANGE 4: Two fixes here:
+//   (a) Replaced opt.title on the disabled <option> with a visible warning div.
+//       Browser engines do not fire hover events on disabled <option> elements,
+//       so the tooltip was silently broken in every major browser. The new
+//       #privacyBrandedWarning div is shown whenever Branded Content is active.
+//   (b) When SELF_ONLY is currently selected and the user enables Branded Content,
+//       the old code reset privacySelect.value to '' (the empty placeholder),
+//       leaving the form in an uncompleted state with no feedback.  The new code
+//       auto-switches to the first available non-private option and displays an
+//       informational message so the user knows what changed and why.
 function updatePrivacyRestrictions() {
     const brandedActive = commercialToggle.checked && brandedContentChk.checked;
+
+    // Show/hide the branded-content privacy warning (replaces non-functional opt.title)
+    privacyBrandedWarning.hidden = !brandedActive;
+
     Array.from(privacySelect.options).forEach(opt => {
         if (opt.value === 'SELF_ONLY') {
             opt.disabled = brandedActive;
-            opt.title    = brandedActive
-                ? "Branded content visibility cannot be set to private."
-                : "";
-            // If currently "Only Me" and branded is now active, reset selection
+
             if (brandedActive && privacySelect.value === 'SELF_ONLY') {
-                privacySelect.value = '';
+                // Find the first non-private, non-placeholder option to fall back to
+                const fallback = Array.from(privacySelect.options).find(
+                    o => o.value && o.value !== 'SELF_ONLY' && !o.disabled
+                );
+                if (fallback) {
+                    privacySelect.value = fallback.value;
+                    statusEl.textContent =
+                        `Privacy has been changed to "${fallback.textContent}" because branded content cannot be set to private.`;
+                    statusEl.className = "info";
+                } else {
+                    // No fallback available — reset to placeholder and surface the warning
+                    privacySelect.value = '';
+                }
             }
         }
     });
 }
 
-// ── Upload button state (Req 3a tooltip + duration gate) ─────────────────────
+// ── Upload button state ───────────────────────────────────────────────────────
+// CHANGE 5: Added Gate 2 — disables the button when no privacy option is selected.
+// Previously the button appeared fully active the moment the page loaded, even
+// though the privacy dropdown was empty. The first actionable error only surfaced
+// at click time. Now the button correctly stays disabled until the user picks a
+// privacy level, matching standard form-completion UX.
 function updateUploadBtnState() {
+    // Gate 1: video duration error
     if (durationError) {
         uploadBtn.disabled = true;
         uploadBtn.title = "";
         return;
     }
+
+    // Gate 2: no privacy level selected yet
+    if (!privacySelect.value) {
+        uploadBtn.disabled = true;
+        uploadBtn.title = "";
+        return;
+    }
+
+    // Gate 3: commercial toggle on but no brand type selected (Req 3a)
     const commercialOnNoneSelected =
         commercialToggle.checked &&
         !yourBrandCheckbox.checked &&
@@ -254,7 +297,6 @@ function updateUploadBtnState() {
 
     if (commercialOnNoneSelected) {
         uploadBtn.disabled = true;
-        // Req 3a: tooltip on hover when no commercial option chosen
         uploadBtn.title = "You need to indicate if your content promotes yourself, a third party, or both.";
     } else {
         uploadBtn.disabled = false;
@@ -262,7 +304,75 @@ function updateUploadBtnState() {
     }
 }
 
-// ── Req 5c: Upload (only fires after user clicks — explicit consent via declaration) ──
+// ── Req 5e: Poll publish status after upload ──────────────────────────────────
+// CHANGE 6: This function was entirely missing from the original code.
+// TikTok requires API clients to poll /v2/post/publish/status/fetch/ (or handle
+// webhooks) so users can see the real status of their post.  Without this, a
+// creator has no way of knowing whether their video actually made it through
+// TikTok's processing pipeline or silently failed.
+//
+// Backend requirement: add POST /tiktok/publish/status/ that accepts
+// ?publish_id=...&open_id=..., looks up the creator's access token, calls
+// POST https://open.tiktokapis.com/v2/post/publish/status/fetch/
+// with body { "publish_id": "<id>" }, and returns { status, fail_reason }.
+// Possible status values from TikTok: PROCESSING_DOWNLOAD, SEND_TO_USER_INBOX,
+// PUBLISH_COMPLETE, FAILED.
+async function pollPublishStatus(publishId) {
+    const open_id      = getCookie('open_id');
+    const MAX_ATTEMPTS = 20;
+    const INTERVAL_MS  = 3000;
+    let   attempts     = 0;
+
+    pollStatusEl.textContent = "Checking publish status…";
+    pollStatusEl.className   = "";
+
+    const poll = async () => {
+        attempts++;
+        if (attempts > MAX_ATTEMPTS) {
+            pollStatusEl.textContent =
+                "Status check timed out. Please check your TikTok profile in a few minutes.";
+            pollStatusEl.className = "warning";
+            return;
+        }
+
+        try {
+            const resp = await fetch(
+                backend_url_base +
+                `/tiktok/publish/status/?publish_id=${encodeURIComponent(publishId)}&open_id=${encodeURIComponent(open_id)}`,
+                { method: 'POST' }
+            );
+            const data = await resp.json();
+            const publishStatus = data.status;
+
+            if (publishStatus === 'PUBLISH_COMPLETE') {
+                pollStatusEl.textContent = "Your video is now live on your TikTok profile!";
+                pollStatusEl.className   = "success";
+            } else if (publishStatus === 'FAILED') {
+                const reason = data.fail_reason || "Unknown error";
+                pollStatusEl.textContent = `Publishing failed: ${reason}. Please try again.`;
+                pollStatusEl.className   = "error";
+            } else {
+                // Still in flight: PROCESSING_DOWNLOAD, SEND_TO_USER_INBOX, etc.
+                pollStatusEl.textContent = `Processing your video… (${publishStatus || 'checking'})`;
+                setTimeout(poll, INTERVAL_MS);
+            }
+        } catch (err) {
+            console.error("Status poll error:", err);
+            // Retry on transient network errors up to the attempt cap
+            if (attempts < MAX_ATTEMPTS) {
+                setTimeout(poll, INTERVAL_MS);
+            } else {
+                pollStatusEl.textContent =
+                    "Could not verify publish status. Please check your TikTok profile.";
+                pollStatusEl.className = "warning";
+            }
+        }
+    };
+
+    setTimeout(poll, INTERVAL_MS);
+}
+
+// ── Req 5c: Upload ────────────────────────────────────────────────────────────
 document.getElementById('uploadBtn').addEventListener('click', async (e) => {
     e.preventDefault();
 
@@ -272,29 +382,39 @@ document.getElementById('uploadBtn').addEventListener('click', async (e) => {
 
     if (!file) {
         statusEl.textContent = "Please select a video to upload.";
-        statusEl.className = "error";
+        statusEl.className   = "error";
         return;
     }
 
     if (!privacyVal) {
         statusEl.textContent = "Please select a privacy status.";
-        statusEl.className = "error";
+        statusEl.className   = "error";
         return;
     }
 
-    statusEl.textContent = "Uploading…";
-    statusEl.className = "";
+    // Safety net: branded content must not be posted as private
+    if (brandedContentChk.checked && privacyVal === 'SELF_ONLY') {
+        statusEl.textContent = "Branded content cannot be set to private. Please change your privacy setting.";
+        statusEl.className   = "error";
+        return;
+    }
+
+    statusEl.textContent    = "Uploading…";
+    statusEl.className      = "";
+    // CHANGE 7: Clear any stale polling message from a previous upload attempt
+    pollStatusEl.textContent = "";
+    pollStatusEl.className   = "";
 
     const formData = new FormData();
-    formData.append('title',            title);
-    formData.append('video',            file);
-    formData.append('privacy_level',    privacyVal);
-    formData.append('allow_comment',    allowComment.checked);
-    formData.append('allow_duet',       allowDuet.checked);
-    formData.append('allow_stitch',     allowStitch.checked);
+    formData.append('title',              title);
+    formData.append('video',              file);
+    formData.append('privacy_level',      privacyVal);
+    formData.append('allow_comment',      allowComment.checked);
+    formData.append('allow_duet',         allowDuet.checked);
+    formData.append('allow_stitch',       allowStitch.checked);
     formData.append('commercial_content', commercialToggle.checked);
-    formData.append('your_brand',       yourBrandCheckbox.checked);
-    formData.append('branded_content',  brandedContentChk.checked);
+    formData.append('your_brand',         yourBrandCheckbox.checked);
+    formData.append('branded_content',    brandedContentChk.checked);
 
     const open_id = getCookie('open_id');
     if (!open_id) { console.log("Cookie was not saved"); return; }
@@ -310,18 +430,24 @@ document.getElementById('uploadBtn').addEventListener('click', async (e) => {
 
         if (data.publish_id) {
             // Req 5d: Inform user about processing time
-            statusEl.textContent = "Video uploaded successfully! It may take a few minutes for your content to process and become visible on your profile.";
+            statusEl.textContent =
+                "Video submitted! It may take a few minutes for your content to process and become visible on your profile.";
             statusEl.className = "success";
+            // CHANGE 6 (cont.): Begin polling now that we have a publish_id
+            pollPublishStatus(data.publish_id);
         } else {
             statusEl.textContent = "Upload failed: " + (data.error || "Unknown error");
-            statusEl.className = "error";
+            statusEl.className   = "error";
         }
     } catch (err) {
         console.error(err);
         statusEl.textContent = "An error occurred during upload.";
-        statusEl.className = "error";
+        statusEl.className   = "error";
     }
 });
 
 // ── Init ──────────────────────────────────────────────────────────────────────
+// CHANGE 3 (cont.): Disable the button immediately so it is never clickable
+// before creator info has loaded and the user has selected a privacy level.
+uploadBtn.disabled = true;
 UpdateDB().then(() => fetchCreatorInfo());

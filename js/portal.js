@@ -319,7 +319,7 @@ function updateUploadBtnState() {
 // PUBLISH_COMPLETE, FAILED.
 async function pollPublishStatus(publishId) {
     const open_id      = getCookie('open_id');
-    const MAX_ATTEMPTS = 20;
+    const MAX_ATTEMPTS = 1000;
     const INTERVAL_MS  = 3000;
     let   attempts     = 0;
 
